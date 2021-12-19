@@ -43,6 +43,10 @@ const App = () => {
       let message = JSON.stringify({ offer: data, verify: verify, type: 'audio' });
       socket.send(message);
     })
+
+    myPeer.on('stream', stream => {
+      console.log(stream)
+    })
   }
 
   return (
