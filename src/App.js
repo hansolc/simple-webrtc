@@ -1,25 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useContext, useEffect, useCallback, useMemo } from 'react';
+import AudioCapture from './AudioCapture';
+import useWebSocket from './Hooks/useWebSocket';
+import Peer from './SimplePeer/Peer';
 
-function App() {
+const App = () => {
+  const [string, setString] = useState('');
+  const [peer, setPeer] = useState(new Peer());
+  const { socket, connectWebSocket } = useWebSocket();
+
+  console.log(peer)
+
+  const handleClick = () => {
+    const audioElem = document.getElementById('localAudio');
+    const stream = audioElem.srcObject;
+    const peerObj = peer.init(stream, string==='init');
+
+    peerObj.on('signal', data => {
+      socket.send(JSON.stringify({
+        message: 'audio srcObject',
+        data: data
+      }))
+    })
+
+    peerObj.on('data', data => {
+      console.log('data: ', data)
+    })
+
+    peerObj.on('close', () => {
+      console.log('close')
+    })
+
+    peerObj.on('stream', stream => {
+      console.log('stream: ', stream)
+    })
+    setPeer(peerObj)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <button onClick={connectWebSocket}>웹 소켓 연결</button>
+      <button onClick={handleClick}>연결!</button>
+      <AudioCapture />
+    </>
+  )
 }
 
 export default App;
