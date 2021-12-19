@@ -41,8 +41,9 @@ const App = () => {
     let myPeer = peer.init(stream, type==='constructor');
 
     myPeer.on('signal', data => {
-      console.log('signal')
+      console.log('signal!')
       let message = JSON.stringify({ offer: data, verify: verify, type: 'audio' });
+      console.log('send message: ', message);
       socket.send(message);
     })
 
