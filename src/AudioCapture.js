@@ -1,8 +1,6 @@
 import React, { useState, useContext, useEffect, useCallback, useMemo } from 'react';
 
-const AudioCapture = ({peer}) => {
-    console.log(peer)
-
+const AudioCapture = () => {
     useEffect(() => {
         navigator.mediaDevices.getUserMedia({audio: true, video: false}).then(info => {
             const track = info.getAudioTracks()[0];

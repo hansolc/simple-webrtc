@@ -5,7 +5,6 @@ class Peer {
     initialized = false;
 
     init = (stream, initiator) => {
-        console.log(stream, initiator)
         this.initialized = true;
 
         this.peer = new SimplePeer({
@@ -21,23 +20,9 @@ class Peer {
         return this.peer;
     }
 
-    connect = (dataFromOther, offInterverId) => { //connect보다는 reply에 가까움
+    connect = (dataFromOther, offInterverId) => {
         this.peer.signal(dataFromOther);
         clearInterval(offInterverId)
-    }
-
-    addStream = (stream) => {
-        this.peer.addStream(stream)
-    }
-    removeStream = (stream) => {
-        this.peer.removeStream(stream)
-    }
-    destroy = (callback) => {
-        this.initialized = false;
-        this.peer.destroy();
-        if(callback){
-            callback();
-        }
     }
 }
 
