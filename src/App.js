@@ -23,11 +23,10 @@ const App = () => {
       const data = JSON.parse(e.data);
       if(data.type==='audio'){
         if(data.verify) {
-          console.log('2')
           handlePeer('receiver', false);
-          let intervalId = setInterval(() => { peer.connect(data['offer'], intervalId)}, 2000);
+          // let intervalId = setInterval(() => { peer.connect(data['offer'], intervalId)}, 2000);
+          peer.connect(data['offer'])
         } else {
-          console.log('4')
           peer.connect(data['offer'])
         }
       }
@@ -39,7 +38,6 @@ const App = () => {
     let myPeer = peer.init(stream, type==='constructor');
 
     myPeer.on('signal', data => {
-      console.log('1, 3')
       let message = JSON.stringify({ offer: data, verify: verify, type: 'audio' });
       socket.send(message);
     })

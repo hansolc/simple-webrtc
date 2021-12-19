@@ -10,12 +10,12 @@ class Peer {
         this.peer = new SimplePeer({
             initiator: initiator,
             stream: stream,
-            // trickle: false,
-            // reconnectTimer: 1000,
-            // iceTransportPolicy: 'relay',
-            // config: {
-            //     iceServers: [{ urls: 'stun:stun.l.google.com:19302' }, { urls: 'stun:global.stun.twilio.com:3478?transport=udp' }]
-            // }
+            trickle: false,
+            reconnectTimer: 1000,
+            iceTransportPolicy: 'relay',
+            config: {
+                iceServers: [{ urls: 'stun:stun.l.google.com:19302' }, { urls: 'stun:global.stun.twilio.com:3478?transport=udp' }]
+            }
         })
         return this.peer;
     }
