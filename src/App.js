@@ -34,10 +34,12 @@ const App = () => {
   })
 
   const handlePeer = (type, verify) => {
+    console.log('handle peer')
     let stream = document.getElementById('localAudio').srcObject;
     let myPeer = peer.init(stream, type==='constructor');
 
     myPeer.on('signal', data => {
+      console.log('signal!')
       let message = JSON.stringify({ offer: data, verify: verify, type: 'audio' });
       socket.send(message);
     })
@@ -45,7 +47,7 @@ const App = () => {
 
   return (
     <>
-      <AudioCapture />
+      <AudioCapture peer={peer} />
       <div>
         {
           ["constructor", "receiver"].map((type, index) => {

@@ -5,6 +5,7 @@ class Peer {
     initialized = false;
 
     init = (stream, initiator) => {
+        console.log(stream, initiator)
         this.initialized = true;
 
         this.peer = new SimplePeer({
