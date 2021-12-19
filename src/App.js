@@ -46,6 +46,7 @@ const App = () => {
 
     myPeer.on('stream', stream => {
       console.log(stream)
+      document.getElementById('remoteAudio').srcObject = stream;
     })
   }
 

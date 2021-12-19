@@ -22,6 +22,7 @@ const AudioCapture = ({peer}) => {
     return (
         <>
             <audio id='localAudio' autoPlay muted />
+            <audio id='remoteAudio' autoPlay />
         </>
     )
 }
