@@ -6,20 +6,18 @@ import Peer from './SimplePeer/Peer';
 const App = () => {
   const [string, setString] = useState('');
   const [peer, setPeer] = useState(new Peer());
-  const { socket, connectWebSocket } = useWebSocket();
 
-  console.log(peer)
-
-  const handleClick = () => {
-    const audioElem = document.getElementById('localAudio');
-    const stream = audioElem.srcObject;
-    const peerObj = peer.init(stream, string==='init');
+  const makePeer = (initiator=false) => {
+    const stream = document.getElementById('localAudio').srcObject;
+    let peerObj = peer.init(stream, initiator);
 
     peerObj.on('signal', data => {
-      socket.send(JSON.stringify({
-        message: 'audio srcObject',
-        data: data
-      }))
+      let message = JSON.stringify({
+        offer: data,
+        initiator: initiator,
+        type: 'audio'
+      })
+      socket.send(message)
     })
 
     peerObj.on('data', data => {
@@ -33,13 +31,15 @@ const App = () => {
     peerObj.on('stream', stream => {
       console.log('stream: ', stream)
     })
-    setPeer(peerObj)
   }
+  const { socket, connectWebSocket } = useWebSocket({makePeer, peer});
+
+
 
   return (
     <>
       <button onClick={connectWebSocket}>웹 소켓 연결</button>
-      <button onClick={handleClick}>연결!</button>
+      <button onClick={() => makePeer(true)}>연결!</button>
       <AudioCapture />
     </>
   )

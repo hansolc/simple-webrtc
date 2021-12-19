@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect, useCallback, useMemo } from 're
 
 const webSocketURL = "wss://socketsbay.com/wss/v2/2/demo/";
 
-const useWebSocket = () => {
+const useWebSocket = ({makePeer=()=>{}, peer}) => {
     const [socket, setSocket] = useState(null);
 
     const connectWebSocket = () => {
@@ -13,9 +13,12 @@ const useWebSocket = () => {
             console.log('socket connected!')
         }
 
-        connectedSocket.onmessage = (data) => {
-            console.log('get messages: ', data)
-            
+        connectedSocket.onmessage = (e) => {
+            const data = JSON.parse(e.data);
+            if(data.type==='audio'){
+                if(data.initiator) makePeer(false);
+                peer.connect(data["offer"])
+            }
         }
     }
 
