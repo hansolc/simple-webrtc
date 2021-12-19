@@ -3,6 +3,7 @@ import React, { useState, useContext, useEffect, useCallback, useMemo } from 're
 const webSocketURL = "wss://socketsbay.com/wss/v2/2/demo/";
 
 const useWebSocket = ({makePeer=()=>{}, peer}) => {
+    console.log(peer)
     const [socket, setSocket] = useState(null);
 
     const connectWebSocket = () => {

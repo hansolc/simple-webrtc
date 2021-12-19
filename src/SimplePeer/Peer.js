@@ -31,7 +31,6 @@ class Peer {
     removeStream = (stream) => {
         this.peer.removeStream(stream)
     }
-
     destroy = (callback) => {
         this.initialized = false;
         this.peer.destroy();

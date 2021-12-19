@@ -4,7 +4,6 @@ const AudioCapture = () => {
 
     useEffect(() => {
         navigator.mediaDevices.getUserMedia({audio: true, video: false}).then(info => {
-            console.log('info: ', info);
             const track = info.getAudioTracks()[0];
             var ctx = new AudioContext();
             var src = ctx.createMediaStreamSource(new MediaStream([track]));
@@ -17,11 +16,12 @@ const AudioCapture = () => {
 
             document.getElementById('localAudio').srcObject = info;
         })
-
     },[])
 
     return (
-        <audio id='localAudio' autoPlay muted />
+        <>
+            <audio id='localAudio' autoPlay muted />
+        </>
     )
 }
 
