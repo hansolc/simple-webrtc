@@ -1,4 +1,8 @@
-# Getting Started with Create React App
+# simple-peer 라이브러를 이용해 Audio Stream 정보 전송
+
+
+
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
