@@ -22,33 +22,27 @@ const App = () => {
     socket.onmessage = (e) => {
       const data = JSON.parse(e.data);
       if(data.type==='audio'){
-        console.log('get message!: ', data)
         if(data.verify) {
-          console.log('1')
           handlePeer('receiver', false);
           // let intervalId = setInterval(() => { peer.connect(data['offer'], intervalId)}, 2000);
           peer.connect(data['offer'])
         } else {
-          console.log('2')
           peer.connect(data['offer'])
         }
       }
     }
-  })
+  }, [socket])
 
   const handlePeer = (type, verify) => {
     let stream = document.getElementById('localAudio').srcObject;
     let myPeer = peer.init(stream, type==='constructor');
 
     myPeer.on('signal', data => {
-      console.log('signal!')
       let message = JSON.stringify({ offer: data, verify: verify, type: 'audio' });
-      console.log('send message: ', message);
       socket.send(message);
     })
 
     myPeer.on('stream', stream => {
-      console.log('stream!')
       document.getElementById('remoteAudio').srcObject = stream;
     })
   }
